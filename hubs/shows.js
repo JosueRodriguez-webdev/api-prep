@@ -15,7 +15,7 @@ shows.post("/", (req, res) => {
   showModel
     .insert(req.body)
     .then((response) => {
-      res.status(201).json(response);
+      res.status(201).json(req.body);
     })
     .catch((err) => {
       res.status(500).json({ error: err });
@@ -33,12 +33,22 @@ shows.put("/:id", (req, res) => {
     });
 });
 
-shows.get("/:id", (req, res) => {
-  console.log(req.body);
+shows.get("/:id/characters", (req, res) => {
   showModel
     .getShowsCharacters(req.params.id)
     .then((response) => {
       res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(500).json({ error: err });
+    });
+});
+
+shows.delete("/:id", (req, res) => {
+  showModel
+    .remove(req.params.id)
+    .then((e) => {
+      res.status(200).json({ message: "show was successfully deleted" });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
